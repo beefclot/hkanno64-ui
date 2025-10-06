@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>false</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Single-file/self-contained publish options -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishTrimmed>false</PublishTrimmed>
+    <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
+  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <StripSymbols>true</StripSymbols>
+    <DebugType>none</DebugType>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <!-- We'll embed hkanno assets as resources and extract at runtime -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Embed entire hkanno folder recursively as resources with logical names preserving relative paths -->
+    <EmbeddedResource Include="..\..\hkanno\**\*">
+      <LogicalName>hkanno/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <!-- Optional app icon: place app.ico under Assets/. Build will use it if present (no copy to output/publish) -->
+  <PropertyGroup Condition="Exists('Assets\\app.ico')">
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <!-- Optional PNG fallback for window icon in Debug builds only (not published) -->
+  <ItemGroup Condition="Exists('Assets\\app.png') and '$(Configuration)' == 'Debug'">
+    <Content Include="Assets\app.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

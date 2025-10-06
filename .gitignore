@@ -1,0 +1,4 @@
+.vscode/
+gui/HKAnnoGui/bin
+gui/HKAnnoGui/obj/Debug
+gui/HKAnnoGui/obj/Release
